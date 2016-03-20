@@ -23,6 +23,7 @@
 #include "temperature.h"
 #include "language.h"
 #include "Sd2PinMap.h"
+#include "mtwled.h"
 
 #if ENABLED(USE_WATCHDOG)
   #include "watchdog.h"
@@ -663,7 +664,13 @@ void manage_heater() {
     #endif
 
   } // Extruders Loop
-
+  
+  #ifdef MTWLED
+   #ifndef MTWLED_disableheatup
+     MTWLEDTemp();
+  #endif
+  #endif
+  
   #if HAS_AUTO_FAN
     if (ms > next_auto_fan_check_ms) { // only need to check fan state very infrequently
       checkExtruderAutoFans();
